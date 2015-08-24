@@ -1,3 +1,5 @@
+'use strict';
+
 var React = require('react');
 var Markdown = require('remarkable');
 var assign = require('react/lib/Object.assign');
@@ -30,11 +32,7 @@ var Remarkable = React.createClass({
 
   render() {
     var Container = this.props.container;
-    return (
-      <Container>
-        {this.content()}
-      </Container>
-    );
+    return React.createElement(Container, null, this.content());
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -66,7 +64,11 @@ var Remarkable = React.createClass({
   },
 
   _highlight () {
-    Prism.highlightAll();
+    var elements = this.getDOMNode().querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');
+
+    for (var i=0, element; element = elements[i++];) {
+      Prism.highlightElement(element, this.props.async);
+    }
   },
 
   content() {

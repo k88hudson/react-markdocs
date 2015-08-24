@@ -2,7 +2,7 @@
   "name": "react-composable-form",
   "version": "0.0.0",
   "description": "",
-  "main": "src/form.js",
+  "main": "src/markdocs.js",
   "scripts": {
     "build": "npm-run-all build:**",
     "start": "npm run build && npm-run-all --parallel server watch:**",
@@ -19,7 +19,7 @@
     "watch:js": "npm run build:js -- --watch",
     "build:css": "npm run watch:css -- --no-watch",
     "watch:css": "autoless --source-map examples www",
-    "server": "live-server www --port=4240"
+    "server": "live-server www --port=1989"
   },
   "author": "k88hudson",
   "license": "MPL-2.0",

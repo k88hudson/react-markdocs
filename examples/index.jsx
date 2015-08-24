@@ -36,10 +36,8 @@ var Home = React.createClass({
 
 Hello world!
 
-${this.state.foo}
-
 \`\`\`javascript
-var x = y;
+var x = ${this.state.foo};
 \`\`\`
 
 Foo bar baz`}
@@ -47,6 +45,9 @@ Foo bar baz`}
       <Highlight className="language-jsx">
       {`<foo>${this.state.foo}</foo>`}
       </Highlight>
+      <pre className="language-jsx">
+      {`<foo />`}
+      </pre>
     </div>);
   }
 });
