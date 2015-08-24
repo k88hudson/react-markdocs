@@ -2,7 +2,7 @@
   "name": "react-markdocs",
   "version": "0.0.0",
   "description": "",
-  "main": "src/markdocs.js",
+  "main": "dist/markdocs.js",
   "scripts": {
     "build": "npm-run-all build:**",
     "start": "npm run build && npm-run-all --parallel server watch:**",
@@ -16,6 +16,7 @@
     "build:static": "cpx \"examples/static/**/*\" www",
     "watch:static": "npm run build:static -- -w",
     "build:js": "webpack",
+    "build:dist": "babel src --out-dir dist",
     "watch:js": "npm run build:js -- --watch",
     "build:css": "npm run watch:css -- --no-watch",
     "watch:css": "autoless --source-map examples www",

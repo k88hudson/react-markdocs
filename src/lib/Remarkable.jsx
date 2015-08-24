@@ -32,7 +32,7 @@ var Remarkable = React.createClass({
 
   render() {
     var Container = this.props.container;
-    return React.createElement(Container, null, this.content());
+    return <Container>{this.content()}</Container>;
   },
 
   componentWillUpdate(nextProps, nextState) {
