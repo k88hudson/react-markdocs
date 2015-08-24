@@ -16,8 +16,9 @@
     "build:static": "cpx \"examples/static/**/*\" www",
     "watch:static": "npm run build:static -- -w",
     "build:js": "webpack",
-    "build:dist": "babel src --out-dir dist",
     "watch:js": "npm run build:js -- --watch",
+    "build:dist": "babel src --out-dir dist",
+    "watch:dist": "npm run build:dist --- --watch",
     "build:css": "npm run watch:css -- --no-watch",
     "watch:css": "autoless --source-map examples www",
     "server": "live-server www --port=1989"
