@@ -1,0 +1,171 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Roboto, sans-serif;
+  color: #545252;
+  background: #D1D6DC;
+}
+
+@import '../src/markdocs';
+
+button {
+  border: none;
+  padding: 10px;
+  background: #69A0FC;
+  color: white;
+  border-radius: 3px;
+  font-size: inherit;
+}
+
+label {
+  color: #999;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  font-size: inherit;
+  border: 1px solid #999;
+  padding: 5px;
+  &[type="text"],
+  &[type="number"] {
+    width: 100%;
+  }
+  &.small {
+    width: 100px;
+    margin-right: 5px;
+  }
+}
+
+textarea {
+  font-size: inherit;
+  width: 300px;
+  height: 100px;
+  border: 1px solid #999;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.errors {
+  border-radius: 3px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 10px;
+  background: #FF7C7C;
+  color: white;
+}
+
+/*********************************************************
+* Docs
+*/
+
+.container {
+  margin: 0 auto;
+  background: white;
+  display: flex;
+}
+
+header {
+  width: 270px;
+  flex-shrink: 0;
+  padding: 20px;
+  border-bottom: 1px solid #CCC;
+  h2 {
+    margin: 0;
+    margin-top: 22px;
+  }
+  ul {
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    margin-bottom: 8px;
+  }
+  a {
+    color: #0095DD;
+    text-decoration: none;
+    padding: 5px;
+    margin-left: -5px;
+    border-radius: 3px;
+    &.active {
+      background: #0095DD;
+      color: white;
+    }
+  }
+}
+
+.body {
+  padding: 20px;
+  max-width: 700px;
+}
+
+.docs {
+  line-height: 1.6;
+  h1 {
+    font-size: 38px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  h1 + h3 {
+    margin-top: 0;
+  }
+  h3 {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #DDD;
+  }
+  h2 {
+    font-size: 28px;
+    margin-top: 30px;
+    border-bottom: 1px solid #DDD;
+  }
+}
+
+.example {
+  padding: 20px;
+  font-size: 13px;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+}
+
+
+/*********************************************************
+* step by step
+*/
+
+.step-by-step {
+  background: white;
+  padding: 20px;
+}
+
+.sbs-nav {
+  text-align: center;
+}
+.sbs-nav-btn {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  .sbs-nav-btn-index,
+  .sbs-nav-btn-title {
+    display: block;
+  }
+  &.active .sbs-nav-btn-index {
+    background: #0095DD;
+    color: white;
+  }
+  .sbs-nav-btn-index {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #EAEFF2;
+    border: 8px solid #EAEFF2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+}
