@@ -132,40 +132,35 @@ header {
   border-radius: 3px;
 }
 
-
 /*********************************************************
-* step by step
+* color demo
 */
-
-.step-by-step {
-  background: white;
-  padding: 20px;
+pre {
+  max-width: 500px;
 }
-
-.sbs-nav {
-  text-align: center;
+.color-hacker {
+  display: flex;
+  > div {
+    padding: 20px;
+  }
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+  }
 }
-.sbs-nav-btn {
+.color-demo {
+  input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  position: relative;
+  height: 30px;
+  width: 30px;
   display: inline-block;
-  text-align: center;
+  vertical-align: middle;
   margin-right: 10px;
-  .sbs-nav-btn-index,
-  .sbs-nav-btn-title {
-    display: block;
-  }
-  &.active .sbs-nav-btn-index {
-    background: #0095DD;
-    color: white;
-  }
-  .sbs-nav-btn-index {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #EAEFF2;
-    border: 8px solid #EAEFF2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
 }

@@ -1,82 +1,97 @@
-/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+jsx&plugins=line-highlight */
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
+@fontSize: 13px;
+@textShadow: none;
+@fontFamily: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+@lineHeight: 1.5;
+@tabSize: 4;
 
 @blockBackground: #F8F5EC;
-@highlightBackground: #F7EBC6;
-@highlightAccent: #F7D87C;
+@baseColor: #5C6E74;
+
+@commentColor: #93A1A1; //
+@punctuationColor: #999; //
+@propertyColor: #905;
+@selectorColor: #690;
+@operatorColor: #a67f59;
+@operatorBg: hsla(0, 0%, 100%, .5);
+@variableColor: #e90;
+@functionColor: #DD4A68;
+@keywordColor: #07a;
+@selectedColor: #b3d4fc;
 
 @inlineCodeColor: #DB4C69;
 @inlineCodeBackground: #F9F2F4;
 
-@commentColor: #93A1A1;
-@punctuationColor: #999;
-@baseColor: #5C6E74;
-@functionColor: #DD4A68;
-@selectedColor: #b3d4fc;
+@highlightBackground: #F7EBC6;
+@highlightAccent: #F7D87C;
 
-code,
-pre {
+/*********************************************************
+* Color demo
+*/
+
+.commentColor-demo {background: @commentColor;}
+.punctuationColor-demo {background: @punctuationColor;}
+.propertyColor-demo { background: @propertyColor;}
+.selectorColor-demo { background: @selectorColor;}
+.operatorColor-demo { background: @operatorColor;}
+.operatorBg-demo { background: @operatorBg;}
+.variableColor-demo { background: @variableColor;}
+.functionColor-demo { background: @functionColor;}
+.keywordColor-demo { background: @keywordColor;}
+.selectedColor-demo { background: @selectedColor;}
+
+/*********************************************************
+* General
+*/
+
+pre[class*="language-"],
+code {
   color: @baseColor;
-  font-size: 13px;
-  //text-shadow: 0 1px white;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: @fontSize;
+  text-shadow: @textShadow;
+  font-family: @fontFamily;
   direction: ltr;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
+  line-height: @lineHeight;
+  tab-size: @tabSize;
   hyphens: none;
-}
 
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-  text-shadow: none;
-  background: @selectedColor;
-}
+  &::selection {
+    text-shadow: none;
+    background: @selectedColor;
+  }
 
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
-  text-shadow: none;
-  background: @selectedColor;
-}
-
-@media print {
-  code[class*="language-"],
-  pre[class*="language-"] {
+  @media print {
     text-shadow: none;
   }
+
 }
 
-/* Code blocks */
-pre {
+// Blocks
+pre[class*="language-"] {
   padding: 1em;
   margin: .5em 0;
   overflow: auto;
-}
 
-pre {
   background: @blockBackground;
 }
 
-/* Inline code */
+// Inline code
 :not(pre) > code {
   padding: .1em .3em;
   border-radius: .3em;
   color: @inlineCodeColor;
   background: @inlineCodeBackground;
+}
+
+/*********************************************************
+* Tokens
+*/
+
+.namespace {
+  opacity: .7;
 }
 
 .token.comment,
@@ -90,10 +105,6 @@ pre {
   color: @punctuationColor;
 }
 
-.namespace {
-  opacity: .7;
-}
-
 .token.property,
 .token.tag,
 .token.boolean,
@@ -101,7 +112,7 @@ pre {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #905;
+  color: @propertyColor;
 }
 
 .token.selector,
@@ -110,7 +121,7 @@ pre {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #690;
+  color: @selectorColor;
 }
 
 .token.operator,
@@ -118,14 +129,14 @@ pre {
 .token.url,
 .language-css .token.string,
 .style .token.string {
-  color: #a67f59;
-  background: hsla(0, 0%, 100%, .5);
+  color: @operatorColor;
+  background: @operatorBg;
 }
 
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-  color: #07a;
+  color: @keywordColor;
 }
 
 .token.function {
@@ -135,7 +146,7 @@ pre {
 .token.regex,
 .token.important,
 .token.variable {
-  color: #e90;
+  color: @variableColor;
 }
 
 .token.important,
@@ -150,9 +161,12 @@ pre {
   cursor: help;
 }
 
+/*********************************************************
+* Line highlighting
+*/
+
 pre[data-line] {
   position: relative;
-  padding: 1em 0 1em 3em;
 }
 
 pre > code {

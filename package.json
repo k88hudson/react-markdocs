@@ -27,7 +27,7 @@
   "license": "MPL-2.0",
   "dependencies": {
     "react": "^0.13.3",
-    "remarkable": "https://github.com/k88hudson/remarkable.git#8c92afc33d471a18ee404c19dd95fb680618c7c0"
+    "remarkable": "1.6.0"
   },
   "engines": {
     "npm": ">=2.0.0"

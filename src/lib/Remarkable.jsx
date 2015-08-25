@@ -1,10 +1,9 @@
 'use strict';
 
 var React = require('react');
-var Markdown = require('remarkable');
-var assign = require('react/lib/Object.assign');
+var Remarkable = require('remarkable');
 
-function renderPrismCode(langName, highlighted) {
+function renderPrismCode(langPrefix, langName, highlighted) {
 
   var linesAttr = '';
 
@@ -16,54 +15,72 @@ function renderPrismCode(langName, highlighted) {
     langName = langName.replace(lines[0], '');
   }
 
-  return `<pre${linesAttr}><code class="language-${langName}">`
+  // We need to add the line-numbers class to append it to the pre tag,
+  // otherwise we get weird positioning problems
+  // https://github.com/PrismJS/prism/blob/gh-pages/plugins/line-highlight/prism-line-highlight.js#L68
+  return `<pre${linesAttr} class="line-numbers"><code class="${langPrefix}${langName}">`
     + highlighted
     + '</code></pre>';
 }
 
-var Remarkable = React.createClass({
+var {has,escapeHtml,unescapeMd,replaceEntities} = require('remarkable/lib/common/utils');
+
+function customFenceRule(tokens, idx, options, env, self) {
+  var token = tokens[idx];
+  var langClass = '';
+  var langPrefix = options.langPrefix;
+  var langName = '';
+  var fenceName;
+  var highlighted;
+
+  if (token.params) {
+    fenceName = token.params.split(/\s+/g)[0];
+    langName = escapeHtml(replaceEntities(unescapeMd(fenceName)));
+  }
+
+  highlighted = escapeHtml(token.content);
+
+  return renderPrismCode(langPrefix, langName, highlighted) + this.getBreak(tokens, idx);
+};
+
+var Markdown = React.createClass({
 
   getDefaultProps() {
     return {
       container: 'div',
       options: {},
+      prism: false,
+      async: false
     };
-  },
-
-  render() {
-    var Container = this.props.container;
-    return <Container>{this.content()}</Container>;
   },
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.options !== this.props.options) {
-      this.md = this._createMarkdownInstance();
+      this.md = this.createMarkdownInstance();
     }
   },
 
   componentDidUpdate (prevProps) {
     if (this.props.prism && this.props !== prevProps) {
-      this._highlight();
+      this.highlight();
     }
   },
 
   componentDidMount() {
     if (this.props.prism) {
-      this._highlight();
+      this.highlight();
     }
   },
 
-  _createMarkdownInstance () {
+  createMarkdownInstance () {
     var options = this.props.options;
-    if (this.props.prism) {
-      options = assign({}, this.props.options, {
-        renderCode: renderPrismCode
-      });
-    }
-    return new Markdown(options);
+    var md = new Remarkable(options);
+    if (this.props.prism) md.renderer.rules.fence = customFenceRule;
+
+    return md;
   },
 
-  _highlight () {
+  highlight() {
     var elements = this.getDOMNode().querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');
 
     for (var i=0, element; element = elements[i++];) {
@@ -71,14 +88,21 @@ var Remarkable = React.createClass({
     }
   },
 
-  content() {
+  getHTML(str) {
+    if (!this.md) {
+      this.md = this.createMarkdownInstance();
+    }
+    return <span dangerouslySetInnerHTML={{__html: this.md.render(str)}} />;
+  },
+
+  renderContent() {
     if (this.props.source) {
-      return <span dangerouslySetInnerHTML={{ __html: this.renderMarkdown(this.props.source) }} />;
+      return this.getHTML(this.props.source);
     }
     else {
       return React.Children.map(this.props.children, child => {
         if (typeof child === 'string') {
-          return <span dangerouslySetInnerHTML={{ __html: this.renderMarkdown(child) }} />;
+          return this.getHTML(child);
         }
         else {
           return child;
@@ -87,14 +111,11 @@ var Remarkable = React.createClass({
     }
   },
 
-  renderMarkdown(source) {
-    if (!this.md) {
-      this.md = this._createMarkdownInstance();
-    }
-
-    return this.md.render(source);
+  render() {
+    var Container = this.props.container;
+    return <Container>{this.renderContent()}</Container>;
   }
 
 });
 
-module.exports = Remarkable;
+module.exports = Markdown;

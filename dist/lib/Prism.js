@@ -4,7 +4,7 @@
 
 "use strict";
 
-var React = require("react/addons");
+var React = require('react/addons');
 
 var PrismCode = React.createClass({
   displayName: "PrismCode",
@@ -17,7 +17,8 @@ var PrismCode = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      async: true };
+      async: true
+    };
   },
 
   componentDidMount: function componentDidMount() {
@@ -35,10 +36,8 @@ var PrismCode = React.createClass({
   },
 
   render: function render() {
-    var _ref = this;
-
-    var props = _ref.props;
-    var state = _ref.state;
+    var props = this.props;
+    var state = this.state;
 
     return React.createElement(
       "pre",
@@ -49,6 +48,7 @@ var PrismCode = React.createClass({
         props.children
       )
     );
-  } });
+  }
+});
 
 module.exports = PrismCode;
