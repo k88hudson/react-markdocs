@@ -16,18 +16,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loaders:  ['babel-loader'],
+        test: /\.js[x]?$/,
+        loaders:  ['babel-loader', 'jsx-loader'],
         include: [jsSrc, testsDir, examplesDir]
       },
       {
         test: /\.md$/,
         loaders:  ['raw-loader']
-      },
-      {
-        test: /\.jsx$/,
-        loaders:  ['babel-loader', 'jsx-loader'],
-        include: [jsSrc, testsDir, examplesDir]
       }
     ]
   },
