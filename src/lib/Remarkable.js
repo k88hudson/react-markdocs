@@ -45,12 +45,16 @@ function customFenceRule(tokens, idx, options, env, self) {
 
 var Markdown = React.createClass({
 
+  propTypes: {
+    postProcess: React.PropTypes.func
+  },
+
   getDefaultProps() {
     return {
       container: 'div',
       options: {},
       prism: false,
-      async: false
+      async: false,
     };
   },
 
@@ -92,7 +96,9 @@ var Markdown = React.createClass({
     if (!this.md) {
       this.md = this.createMarkdownInstance();
     }
-    return <span dangerouslySetInnerHTML={{__html: this.md.render(str)}} />;
+    var htmlString = this.md.render(str);
+    if (this.props.postProcess) htmlString = this.props.postProcess(htmlString);
+    return <span dangerouslySetInnerHTML={{__html: htmlString}} />;
   },
 
   renderContent() {
