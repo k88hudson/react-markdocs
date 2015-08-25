@@ -45,7 +45,7 @@ var PrismCode = React.createClass({
       React.createElement(
         "code",
         { ref: "code", className: props.className },
-        props.children
+        props.source || props.children
       )
     );
   }

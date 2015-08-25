@@ -7,15 +7,23 @@ body {
   background: #D1D6DC;
 }
 
+*[hidden] {
+  display: none !important;
+}
+
 @import '../src/markdocs';
 
-button {
+button,
+.btn {
   border: none;
-  padding: 10px;
+  padding: 10px 20px;
   background: #69A0FC;
   color: white;
   border-radius: 3px;
   font-size: inherit;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0px 2px 0px darken(#69A0FC, 10%);
 }
 
 label {
@@ -26,36 +34,10 @@ label {
 
 input {
   font-size: inherit;
-  border: 1px solid #999;
-  padding: 5px;
-  &[type="text"],
-  &[type="number"] {
-    width: 100%;
-  }
-  &.small {
-    width: 100px;
-    margin-right: 5px;
-  }
-}
-
-textarea {
-  font-size: inherit;
-  width: 300px;
-  height: 100px;
-  border: 1px solid #999;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.errors {
+  border: 1px solid #DDD;
   border-radius: 3px;
-  margin-bottom: 5px;
   margin-top: 5px;
-  padding: 10px;
-  background: #FF7C7C;
-  color: white;
+  padding: 5px;
 }
 
 /*********************************************************
@@ -104,25 +86,6 @@ header {
 
 .docs {
   line-height: 1.6;
-  h1 {
-    font-size: 38px;
-    margin-top: 0;
-    margin-bottom: 20px;
-  }
-  h1 + h3 {
-    margin-top: 0;
-  }
-  h3 {
-    font-size: 24px;
-    margin-top: 30px;
-    margin-bottom: 0;
-    border-bottom: 1px solid #DDD;
-  }
-  h2 {
-    font-size: 28px;
-    margin-top: 30px;
-    border-bottom: 1px solid #DDD;
-  }
 }
 
 .example {
@@ -135,17 +98,81 @@ header {
 /*********************************************************
 * color demo
 */
-pre {
-  max-width: 500px;
+
+.cf() {
+  &:before,
+  &:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+  }
+
+  &:after {
+      clear: both;
+  }
 }
+
+
 .color-hacker {
+  background: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pre[class*=language-] {
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+  }
+  pre[class*=language-]+pre[class*=language-]{
+    margin-top: 20px;
+  }
   display: flex;
   > div {
-    padding: 20px;
+    max-height: 100%;
+    overflow-y: auto;
+  }
+  > .sample {
+    flex-grow: 1;
   }
   .sidebar {
-    width: 300px;
+    padding: 20px;
+    width: 500px;
     flex-shrink: 0;
+  }
+}
+.download {
+  font-size: 24px;
+  font-weight: inherit;
+  margin-top: 0;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  span {
+    flex-grow: 1;
+  }
+  a:not(.btn) {
+    color: inherit;
+    &:hover {
+      color: #FFB400;
+    }
+  }
+  .btn {
+    font-size: 14px;
+  }
+}
+
+.color-wrapper {
+  margin-right: -1%;
+  .cf;
+}
+.color {
+  float: left;
+  width: 49%;
+  margin-right: 1%;
+  margin-bottom: 20px;
+  input {
+    width: 100%;
   }
 }
 .color-demo {
@@ -157,6 +184,7 @@ pre {
     width: 100%;
     height: 100%;
   }
+  border-radius: 3px;
   position: relative;
   height: 30px;
   width: 30px;

@@ -2,19 +2,20 @@ var React = require('react/addons');
 var Router = require('react-router');
 var {DefaultRoute, Link, Route, RouteHandler} = Router;
 var {Highlight, Markdown} = require('../src/markdocs.js');
+var throttle = require('lodash.throttle');
 
 var defaultTheme = {
   blockBackground: '#F8F5EC',
   baseColor: '#5C6E74',
   commentColor: '#93A1A1',
-  punctuationColor: '#999',
-  propertyColor: '#905',
-  selectorColor: '#690',
+  punctuationColor: '#999999',
+  propertyColor: '#990055',
+  selectorColor: '#669900',
   operatorColor: '#a67f59',
-  operatorBg: 'hsla(0, 0%, 100%, .5)',
-  variableColor: '#e90',
+  operatorBg: '#FFFFFF',
+  variableColor: '#ee9900',
   functionColor: '#DD4A68',
-  keywordColor: '#07a',
+  keywordColor: '#0077aa',
   selectedColor: '#b3d4fc',
   inlineCodeColor: '#DB4C69',
   inlineCodeBackground: '#F9F2F4',
@@ -56,32 +57,66 @@ var App = React.createClass({
 var Home = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function () {
-    return defaultTheme;
+    return {
+      colors: defaultTheme,
+      css: ''
+    };
   },
-  updateColors: function () {
-    renderStyles(this.state, (css) => {
-      this.setState({css});
-    });
+  componentDidMount: function () {
+
+    this.updateColors = throttle(() => {
+      renderStyles(this.state.colors, (css) => {
+        this.setState({css});
+      });
+    }, 500);
+
+    // this.updateColors();
+
+  },
+  updateSwatch: function (color) {
+    return (e) => {
+      var colors = this.state.colors;
+      colors[color] = e.target.value;
+      this.setState({colors});
+      this.updateColors();
+    };
   },
   render: function () {
     return (<div className="docs">
       <style>{this.state.css}</style>
 
       <div className="color-hacker">
-        <Markdown prism source={require('./colors-demo.md')} />
         <div className="sidebar">
-          <button onClick={this.updateColors}>Update colors</button>
-          {colorClasses.map(color => {
-            return (<p>
-              <div className="color-demo" style={{background: this.state[color]}}>
-                <input type="color" valueLink={this.linkState(color)} />
+          <h2 className="download">
+            <span><a href="http://prismjs.com" target="_blank">Prism.js</a> Theme Generator</span>
+            <a hidden={!this.state.css}  className="btn" href={'data:application/octet-stream;charset=utf-8,' + encodeURI(this.state.css)}>Download CSS</a>
+          </h2>
+          <div className="color-wrapper">{colorClasses.map(color => {
+            return (<div className="color">
+              <div className="color-demo" style={{background: this.state.colors[color]}}>
+                 <input type="color" value={this.state.colors[color]} onChange={this.updateSwatch(color)} />
               </div>
               <code>@{color}</code>
-
-            </p>);
-          })}
+              <input type="type" value={this.state.colors[color]} onChange={throttle(this.updateSwatch(color), 100)} />
+            </div>);
+          })}</div>
+        </div>
+        <div className="sample">
+          <Markdown prism source={require('./colors-demo.md')} />
         </div>
       </div>
+    </div>);
+  }
+});
+
+var Tests = React.createClass({
+  getInitialState: function () {
+    return {
+      foo: 'abc'
+    };
+  },
+  render: function () {
+    return (<div>
       <input valueLink={this.linkState('foo')} />
 
       <Highlight className="language-jsx">
