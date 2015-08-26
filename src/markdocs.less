@@ -1,8 +1,18 @@
+/* http://k88hudson.github.io/react-markdocs */
+/**
+ * @author k88hudson
+ *
+ * Based on prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
 @fontSize: 13px;
 @textShadow: none;
 @fontFamily: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 @lineHeight: 1.5;
 @tabSize: 4;
+@paddingTop: 1em;
 
 @blockBackground: #F8F5EC;
 @baseColor: #5C6E74;
@@ -30,7 +40,7 @@
 */
 
 pre[class*="language-"],
-code {
+code[class*="language-"] {
   color: @baseColor;
   font-size: @fontSize;
   text-shadow: @textShadow;
@@ -41,10 +51,18 @@ code {
   word-spacing: normal;
   word-break: normal;
   line-height: @lineHeight;
+
+  -moz-tab-size: @tabSize;
+  -o-tab-size: @tabSize;
   tab-size: @tabSize;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
   hyphens: none;
 
-  &::selection {
+  &::selection,
+  &::mozselection {
     text-shadow: none;
     background: @selectedColor;
   }
@@ -57,7 +75,7 @@ code {
 
 // Blocks
 pre[class*="language-"] {
-  padding: 1em;
+  padding: @paddingTop;
   margin: .5em 0;
   overflow: auto;
 
@@ -65,7 +83,7 @@ pre[class*="language-"] {
 }
 
 // Inline code
-:not(pre) > code {
+:not(pre) > code[class*="language-"] {
   padding: .1em .3em;
   border-radius: .3em;
   color: @inlineCodeColor;
@@ -155,7 +173,7 @@ pre[data-line] {
   position: relative;
 }
 
-pre > code {
+pre[class*="language-"] > code[class*="language-"] {
   position: relative;
   z-index: 1;
 }
@@ -165,7 +183,7 @@ pre > code {
   left: 0;
   right: 0;
   padding: inherit 0;
-  margin-top: 1em; /* Same as .prism’s padding-top */
+  margin-top: @paddingTop;
 
   background: @highlightBackground;
   box-shadow: inset 5px 0 0 @highlightAccent;

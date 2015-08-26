@@ -89,7 +89,7 @@ var Home = React.createClass({
         <div className="sidebar">
           <h2 className="download">
             <span><a href="http://prismjs.com" target="_blank">Prism.js</a> Theme Generator</span>
-            <a hidden={!this.state.css}  className="btn" href={'data:application/octet-stream;charset=utf-8,' + encodeURI(this.state.css)}>Download CSS</a>
+            <a hidden={!this.state.css} className="btn" href={'data:application/octet-stream;charset=utf-8,' + encodeURI(this.state.css)}>Download CSS</a>
           </h2>
           <div className="color-wrapper">{colorClasses.map(color => {
             return (<div className="color">
